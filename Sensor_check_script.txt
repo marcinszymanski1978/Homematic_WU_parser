@@ -1,0 +1,44 @@
+boolean debug                   = false;
+string  deviceid;
+var pushBulletMessage = dom.GetObject("PushBullet_message");
+foreach(deviceid, dom.GetObject(ID_DEVICES).EnumUsedIDs())
+{
+    var device  = dom.GetObject(deviceid);
+    string channelid;
+    foreach(channelid,device.Channels().EnumUsedIDs())
+        {
+            var channel = dom.GetObject(channelid);
+            if(("0000D709A86767:1" == channel.Address())|| 
+               ("0000D8A99E473B:1" == channel.Address())|| 
+               ("0000D8A98B7E16:1" == channel.Address())||
+               ("0000D7099D154F:1" == channel.Address())||
+               ("0000D709925344:1" == channel.Address())||
+               ("0000D5699516CF:1" == channel.Address())||
+               ("0000D569A4ACCE:1" == channel.Address())||
+               ("0000D8A99BB726:1" == channel.Address())||
+               ("0000D8A99BBF6C:1" == channel.Address())||
+               ("0000D8A99881A7:1" == channel.Address())||
+               ("0000D8A991D5C5:1" == channel.Address())||
+               ("0000D569A0AA45:1" == channel.Address()))
+            {
+                var interface   =   dom.GetObject(channel.Interface());
+                var datapoint   =   interface#"."#channel.Address();
+                string   state    = dom.GetObject(datapoint#".STATE").Value();
+              WriteLine(device);
+              WriteLine(channel.Address());
+              WriteLine(state);
+                
+                if ((state == "1"))
+                  {
+                    string textToSend ="";
+                    textToSend = pushBulletMessage.Variable()#" // "#dom.GetObject(deviceid)#" ===> alarm!"; 
+                    pushBulletMessage.Variable(textToSend);
+                    dom.GetObject("Alarm_state").State(true);
+                    
+                  }
+               
+            }
+        }
+}
+
+
