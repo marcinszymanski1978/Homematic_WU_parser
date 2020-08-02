@@ -1,0 +1,26 @@
+boolean debug                   = false;
+string  deviceid;
+real    allvalvestate       = 0.0;
+foreach(deviceid, dom.GetObject(ID_DEVICES).EnumUsedIDs())
+{
+    var device  = dom.GetObject(deviceid);
+    if( ("HmIP-eTRV-2" == device.HssType()) || ("HmIP-eTRV-B" == device.HssType()) )
+    {
+        string channelid;
+        foreach(channelid,device.Channels().EnumUsedIDs())
+        {
+            var channel = dom.GetObject(channelid);
+            if(("HEATING_CLIMATECONTROL_TRANSCEIVER" == channel.HSSID()) )
+            {
+                var interface   =   dom.GetObject(channel.Interface());
+                var datapoint   =   interface#"."#channel.Address();
+                real    valvestate          = dom.GetObject(datapoint#".LEVEL").Value();
+                !WriteLine(dom.GetObject(deviceid));
+                !WriteLine(dom.GetObject(datapoint#".LEVEL").Value());
+                allvalvestate=allvalvestate+valvestate;
+            }
+        }
+    }
+}
+var StanGlowicNum= dom.GetObject("StanGlowicNum");
+StanGlowicNum.State (allvalvestate);
