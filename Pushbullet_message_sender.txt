@@ -1,0 +1,6 @@
+string name = "CCU3 - Message:";
+string pushBulletMessage = dom.GetObject("PushBullet_message");
+string message = pushBulletMessage.Variable();
+dom.GetObject("CUxD.CUX2801001:2.CMD_EXEC").State("LD_LIBRARY_PATH=/usr/local/addons/cuxd /usr/local/addons/cuxd/curl -u o.KSNs0zhlMikFFgTP8fE4a4qPn1ahr1lD: -k -d device_iden=ujAkmrgIZmCsjz1Mck4hbg -d type=note -d title='"#name#"' -d body='"#message#"' https://api.pushbullet.com/api/pushes");
+
+pushBulletMessage.Variable("");
