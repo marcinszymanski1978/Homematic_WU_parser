@@ -1,0 +1,70 @@
+boolean debug                   = false;
+string  deviceid;
+var get_profile_temp_status = dom.GetObject("TEMP_PROFILE_SET");
+var profile_set = get_profile_temp_status.Variable();
+
+foreach(deviceid, dom.GetObject(ID_DEVICES).EnumUsedIDs())
+{
+    var device  = dom.GetObject(deviceid);
+    if( ("HmIP-STH" == device.HssType()) || ("HmIP-BWTH" == device.HssType()) || ("HmIP-WTH-2" == device.HssType()) )
+    {
+        string channelid;
+        foreach(channelid,device.Channels().EnumUsedIDs())
+        {
+            var channel = dom.GetObject(channelid);
+            if(("HEATING_CLIMATECONTROL_TRANSCEIVER" == channel.HSSID()) )
+            {
+                var interface   =   dom.GetObject(channel.Interface());
+                var datapoint   =   interface#"."#channel.Address();
+                var dp1 = dom.GetObject(datapoint#".CONTROL_MODE");
+                var dp2 = dom.GetObject(datapoint#".SET_POINT_MODE");
+                var dp3 = dom.GetObject(datapoint#".ACTIVE_PROFILE");
+                
+                var control_mode = dp1.Value();
+                var set_point_mode = dp2.Value();
+                var active_profile = dp3.Value();
+                
+                WriteLine("DataPoint = "#datapoint);
+                WriteLine("ControlMode = "#control_mode);
+                WriteLine("SetPointMode = "#set_point_mode);
+                WriteLine("ActiveProfile = "#active_profile);
+                WriteLine("ProfileSetVariable = "#profile_set);
+                WriteLine("=======================");
+                
+
+
+           !  if ( (set_point_mode != 0) ) {
+            !  dom.GetObject(dp1).State(0);                
+             ! dom.GetObject(dp2).State(0);
+              !  }
+              
+              if ((profile_set == 0 ) && (active_profile != 1)){
+                 dom.GetObject(dp3).State(1);
+              }
+              
+              if ((profile_set == 1 ) && (active_profile != 2)){
+                 dom.GetObject(dp3).State(2);
+              }
+              
+              if ((profile_set == 2 ) && (active_profile != 3)){
+                 dom.GetObject(dp3).State(3);
+              }
+              
+              if ((profile_set == 3 ) && (active_profile != 4)){
+                 dom.GetObject(dp3).State(4);
+              }
+              
+              if ((profile_set == 4 ) && (active_profile != 5)){
+                 dom.GetObject(dp3).State(5);
+              }
+              
+              if ((profile_set == 5 ) && (active_profile != 6)){
+                 dom.GetObject(dp3).State(6);
+              }
+                              
+
+                
+            }
+        }
+    }
+}
