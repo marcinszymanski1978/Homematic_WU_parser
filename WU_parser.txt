@@ -1,0 +1,123 @@
+        
+var url = "https://api.weather.com/v2/pws/observations/current?stationId=IMZJOZEF4&format=xml&units=m&apiKey=33c5c10bf42247d785c10bf42207d7b3";
+
+dom.GetObject("CUxD.CUX2801001:1.CMD_SETS").State("wget -q -O - '"#url#"'");
+dom.GetObject("CUxD.CUX2801001:1.CMD_QUERY_RET").State(1);
+string weather_xml = dom.GetObject("CUxD.CUX2801001:1.CMD_RETS").State();
+
+string word = "temp";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+real value = date.ToFloat();
+dom.GetObject("W_Temperature").State(value);
+
+string word = "obsTimeLocal";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Last_update_time").State(date);
+
+string word = "windGust";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+real value = date.ToFloat();
+dom.GetObject("W_Wind_gust").State(value);
+
+string word = "windSpeed";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+real value = date.ToFloat();
+dom.GetObject("W_Wind_speed").State(value);
+
+string word = "precipRate";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+real value = date.ToFloat();
+dom.GetObject("W_Percipitation_rate").State(value);
+
+string word = "precipTotal";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+real value = date.ToFloat();
+dom.GetObject("W_Percipitation_total").State(value);
+
+string word = "stationID";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Station").State(date);
+
+string word = "humidity";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Humidity").State(date);
+
+string word = "pressure";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Pressure").State(date);
+
+string word = "winddir";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Wind_direction").State(date);
+
+string word = "solarRadiation";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Solar_radiation").State(date);
+
+string word = "dewpt";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Dew_point").State(date);
+
+string word = "uv";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_UV").State(date);
+
+string word = "windChill";
+integer word_lenght = word.Length();
+integer word_position = weather_xml.Find(word);
+string date = weather_xml.Substr((word_position + word_lenght +1), 100);
+integer word_position = date.Find(word);
+date = date.Substr(0, (word_position -2));
+dom.GetObject("W_Wind_chill").State(date);
